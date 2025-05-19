@@ -17,6 +17,7 @@ function addNote() {
   const newNote = {
     id: Date.now(),
     text: "",
+    color: "#fff68f",
     x: 50 + Math.random() * 300,
     y: 50 + Math.random() * 300
   };
@@ -30,6 +31,7 @@ function createNoteElement(note) {
   noteEl.className = "note";
   noteEl.style.left = `${note.x}px`;
   noteEl.style.top = `${note.y}px`;
+  noteEl.style.background = note.color;
   noteEl.setAttribute("data-id", note.id);
   noteEl.draggable = true;
 
@@ -49,8 +51,19 @@ function createNoteElement(note) {
     saveNotes();
   };
 
+  const colorPicker = document.createElement("input");
+  colorPicker.type = "color";
+  colorPicker.className = "color-picker";
+  colorPicker.value = note.color;
+  colorPicker.oninput = (e) => {
+    note.color = e.target.value;
+    noteEl.style.background = note.color;
+    saveNotes();
+  };
+
   noteEl.appendChild(deleteBtn);
   noteEl.appendChild(textarea);
+  noteEl.appendChild(colorPicker);
   document.getElementById("wall").appendChild(noteEl);
 
   noteEl.addEventListener("dragstart", (e) => {
@@ -65,6 +78,15 @@ function createNoteElement(note) {
     noteEl.style.left = `${note.x}px`;
     noteEl.style.top = `${note.y}px`;
     saveNotes();
+  });
+}
+
+function exportWall() {
+  html2canvas(document.getElementById("wall")).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "muro-de-ideas.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   });
 }
 
