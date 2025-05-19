@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,9 +10,11 @@
   <div class="header">
     <h1>🧠 Muro de Ideas</h1>
     <button onclick="addNote()">➕ Nueva Nota</button>
+    <button onclick="exportWall()">📸 Exportar Imagen</button>
   </div>
   <div id="wall"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
